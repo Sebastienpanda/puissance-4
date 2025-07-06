@@ -1,0 +1,25 @@
+<div class="win">
+    <span class="win__subtitle">
+    @if (final()) {
+        {{ finalWinner() === 2 ? 'Vous avez perdu la série' : 'Player 1 gagne la série !' }}
+    } @else {
+        {{ winner() === 0 ? 'Égalité' : (winner() === 2 ? 'CPU' : 'Player 1') }}
+    }
+    </span>
+
+    <h1 class="win__title">
+        @if (final()) {
+            🏆
+        } @else if (winner() !== 0) {
+            GAGNE
+        }
+    </h1>
+
+    <button class="win__button" (click)="handleClick()">
+        @if (final()) {
+            Restart Series
+        } @else {
+            Manche suivante
+        }
+    </button>
+</div>

@@ -1,0 +1,26 @@
+.turn-indicator {
+    position: absolute;
+    bottom: -120px;
+    z-index: 4;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &__content {
+        position: absolute;
+        top: 30px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    &__label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    &__time {
+        font-size: 3.5rem;
+        font-weight: bold;
+    }
+}

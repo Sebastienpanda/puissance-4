@@ -1,0 +1,7 @@
+<div class="player-info" [class]="color()">
+    <div class="player-info__icon">
+        <img [src]="color() === 'red' ? '/player-one.png' : '/player-two.png'" alt="Player icon"/>
+    </div>
+    <div class="player-info__name">{{ name() }}</div>
+    <div class="player-info__score">{{ score() }}</div>
+</div>

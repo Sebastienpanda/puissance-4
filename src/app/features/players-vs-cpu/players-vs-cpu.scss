@@ -1,0 +1,15 @@
+.player-info--player-1, .player-info--player-2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.player-info--player-1 {
+    left: 440px;
+}
+
+.player-info--player-2 {
+    right: 440px;
+}
+
+

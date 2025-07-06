@@ -1,0 +1,50 @@
+.grille {
+    position: absolute;
+    top: 13px;
+    left: 12px;
+    display: grid;
+    grid-template-columns: repeat(7, 80px);
+    grid-template-rows: repeat(6, 80px);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 2;
+    gap: 8px;
+
+    &__cell {
+        width: 64px;
+        height: 64px;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        appearance: none;
+        justify-self: center;
+        align-self: center;
+        background-color: transparent;
+    }
+
+    &__token {
+        pointer-events: none;
+        user-select: none;
+        animation: pop-in 350ms ease-in-out;
+
+        &--container {
+            position: relative;
+            width: 64px;
+            height: 64px;
+        }
+    }
+
+    &__ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 34px;
+        height: 34px;
+        border: 6px solid white;
+        border-radius: 50%;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+}

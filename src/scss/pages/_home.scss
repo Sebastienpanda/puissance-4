@@ -1,0 +1,40 @@
+.main {
+    background-color: var(--color-purple-850);
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.bottom {
+    border-radius: 3.75rem 3.75rem 0 0;
+    background: var(--color-purple-900);
+    height: 200px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    transition: background-color 300ms ease-in-out;
+
+    &--red {
+        background-color: var(--color-red-900);
+    }
+
+    &--yellow {
+        background-color: var(--color-yellow-900);
+    }
+}
+
+@keyframes pop-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    80% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}

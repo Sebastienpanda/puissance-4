@@ -1,0 +1,26 @@
+<div class="grille">
+    @for (row of grid(); track $index; let rowIndex = $index) {
+        @for (cell of row; track $index; let colIndex = $index) {
+            <button
+                type="button"
+                class="grille__cell"
+                (click)="cellClick.emit({ row: rowIndex, col: colIndex })">
+                @if (cell === 1) {
+                    <div class="grille__token--container">
+                        <img src="/piece-red.png" alt="Pion rouge" class="grille__token"/>
+                        @if (isWinningCell()(rowIndex, colIndex)) {
+                            <div class="grille__ring"></div>
+                        }
+                    </div>
+                } @else if (cell === 2) {
+                    <div class="grille__token--container">
+                        <img src="/piece-yellow.png" alt="Pion jaune" class="grille__token"/>
+                        @if (isWinningCell()(rowIndex, colIndex)) {
+                            <div class="grille__ring"></div>
+                        }
+                    </div>
+                }
+            </button>
+        }
+    }
+</div>

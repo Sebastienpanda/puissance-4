@@ -1,0 +1,39 @@
+.win {
+    border-radius: 1.25rem;
+    border: 3px solid var(--color-black);
+    background: var(--color-white);
+    box-shadow: 0 10px 0 0 var(--color-black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    width: 285px;
+    padding: 1rem 0;
+
+    &__subtitle {
+        font-weight: 700;
+    }
+
+    &__title {
+        font-size: 3.5rem;
+    }
+
+    &__button {
+        border-radius: 1.25rem;
+        background: var(--color-purple-900);
+        color: var(--color-white);
+        border: none;
+        padding: 10px 22px;
+        cursor: pointer;
+        transition: background-color 300ms ease-in-out;
+
+        &:hover {
+            background: var(--color-purple-850);
+        }
+    }
+}

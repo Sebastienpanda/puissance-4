@@ -1,0 +1,30 @@
+.grid {
+    position: relative;
+    width: 632px;
+    height: 584px;
+
+    &__back,
+    &__front {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__back {
+        z-index: 0;
+    }
+
+    &__front {
+        z-index: 3;
+        pointer-events: none;
+    }
+}
+
+.current-player-icon {
+    position: absolute;
+    top: -34px;
+    z-index: 4;
+    transition: left 350ms ease-in-out;
+}

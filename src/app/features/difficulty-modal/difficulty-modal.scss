@@ -1,0 +1,22 @@
+.modal {
+    background: white;
+    border: 3px solid black;
+    border-radius: 12px;
+    padding: 2rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    text-align: center;
+    box-shadow: 0 10px 0 black;
+
+    button {
+        margin: 1rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+}
+
+

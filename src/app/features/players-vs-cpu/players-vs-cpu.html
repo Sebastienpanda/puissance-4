@@ -1,0 +1,26 @@
+<main class="main">
+    @if (difficulty() === null) {
+        <app-difficulty-modal (choose)="onChooseDifficulty($event)"/>
+    } @else {
+        <app-game-board
+            [grid]="grid()"
+            [currentPlayer]="currentPlayer()"
+            [lastPlayer]="lastPlayer()"
+            [lastPlayedColumn]="lastPlayedColumn()"
+            [winner]="winner"
+            [markerPosition]="markerPosition()"
+            [isWinningCell]="isWinningCell"
+            [finalWinner]="finalWinner"
+            (cellClick)="handleClick($event.row, $event.col)"
+            (timeout)="handleTimeout()"
+            (playAgain)="resetGame()"
+        />
+
+        <app-player-info name="Player 1" [score]="player1Score" color="red" class="player-info--player-1"/>
+        <app-player-info name="CPU" [score]="player2Score" color="yellow" class="player-info--player-2"/>
+        <div class="bottom"
+             [class.bottom--red]="currentPlayer() === 1"
+             [class.bottom--yellow]="currentPlayer() === 2"
+        ></div>
+    }
+</main>

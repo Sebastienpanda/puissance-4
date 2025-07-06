@@ -11,7 +11,11 @@
   "projects": {
     "angular-template": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+          "@schematics/angular:component": {
+              "style": "scss"
+          }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -28,7 +32,7 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/scss/main.scss"
             ]
           },
           "configurations": {
@@ -81,7 +85,7 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/scss/main.scss"
             ]
           }
         },

@@ -1,0 +1,43 @@
+<div class="grid">
+    <div class="grid__back">
+        <img src="/Shape%20Black.png" alt="Grille noire"/>
+    </div>
+
+    <app-grid
+        [grid]="grid()"
+        [isWinningCell]="isWinningCell()"
+        (cellClick)="onCellClick($event)"
+    />
+
+    @if (lastPlayedColumn() !== null) {
+        <app-current-player-icon
+            [currentPlayer]="lastPlayer()!"
+            [style.left.px]="markerPosition()"
+            class="current-player-icon"
+        />
+    }
+
+    <div class="grid__front">
+        <img src="/Shape.png" alt="Grille blanche"/>
+    </div>
+
+    @if (finalWinner() !== null) {
+        <app-win
+            [winner]="finalWinner()!"
+            [final]="true"
+            (playAgain)="onPlayAgain()"
+        />
+    } @else if (winner() !== null) {
+        <app-win
+            [winner]="winner()!"
+            (playAgain)="onPlayAgain()"
+            [finalWinner]="finalWinner()!"
+        />
+    } @else {
+        <app-player-turn
+            [winner]="winner()!"
+            [currentPlayer]="currentPlayer()"
+            (timeout)="onTimeout()"
+        />
+    }
+</div>

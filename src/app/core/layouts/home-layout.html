@@ -1,1 +1,18 @@
+@if (!isHome()) {
+    <header class="header">
+        <button class="btn" (click)="openMenu()">Menu</button>
+        <a routerLink="/">
+            <img src="/logo.png" alt="Logo"/>
+        </a>
+        <a routerLink="/" class="btn">Restart</a>
+    </header>
+}
+
 <router-outlet/>
+
+@if (isModalOpen()) {
+    <app-menu-modal
+        (close)="closeMenu()"
+        (restart)="restartGame()"
+        (quit)="quitGame()"/>
+}

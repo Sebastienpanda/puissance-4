@@ -1,9 +1,11 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal} from '@angular/core';
 import {GameBoard} from '@features/game-board/game-board';
 import {PlayerInfo} from '@features/player-info/player-info';
 import {DifficultyModal} from '@features/difficulty-modal/difficulty-modal';
 import {GameStateService} from '@core/gameScore/game-state-service';
 import {GameEngineService} from '@core/gameEngine/game-engine-service';
+import {GamePauseService} from '@core/gamePause/game-pause';
+import {CpuControllerService} from '@core/cpu/cpu-service';
 
 @Component({
     selector: 'app-players-vs-cpu',
@@ -14,6 +16,9 @@ import {GameEngineService} from '@core/gameEngine/game-engine-service';
 export default class PlayersVsCpu {
     private readonly gameState = inject(GameStateService);
     private readonly game = inject(GameEngineService);
+    private readonly pauseService = inject(GamePauseService);
+    private readonly cpuController = inject(CpuControllerService);
+
 
     difficulty = signal<'easy' | 'medium' | 'hard' | null>(null);
     badMoves = signal<Set<number>>(new Set());
@@ -22,6 +27,36 @@ export default class PlayersVsCpu {
     readonly currentPlayer = signal(1);
     readonly lastPlayedColumn = signal<number | null>(null);
     readonly winningCells = signal<[number, number][]>([]);
+    private cpuTimeoutId: ReturnType<typeof setTimeout> | null = null;
+    private readonly isCpuScheduled = signal(false);
+    private readonly isBoostedMedium = signal(false);
+
+    constructor() {
+        effect(() => {
+            if (!this.pauseService.isPaused()) {
+                if (this.currentPlayer() === 2 && this.winner === null && this.cpuTimeoutId === null) {
+                    this.cpuMove();
+                }
+            }
+        });
+
+        this.cpuController.register(
+            () => this.cancelCpuMove(),
+            () => {
+                if (this.cpuTimeoutId === null) {
+                    this.cpuMove();
+                }
+            }
+        );
+    }
+
+    cancelCpuMove() {
+        if (this.cpuTimeoutId !== null) {
+            clearTimeout(this.cpuTimeoutId);
+            this.cpuTimeoutId = null;
+            this.isCpuScheduled.set(false);
+        }
+    }
 
     onChooseDifficulty(level: 'easy' | 'medium' | 'hard') {
         this.difficulty.set(level);
@@ -52,18 +87,16 @@ export default class PlayersVsCpu {
 
     handleClick(_: number, col: number) {
         if (this.difficulty() === null || this.currentPlayer() !== 1 || this.winner !== null) return;
-        const played = this.placeToken(col, 1);
-
-        if (played && this.currentPlayer() === 2 && this.winner === null) {
-            setTimeout(() => this.cpuMove(), 0);
-        }
+        this.placeToken(col, 1);
     }
 
     resetGame() {
+        this.cancelCpuMove();
         this.grid.set(this.game.createGrid());
         this.winningCells.set([]);
         this.lastPlayedColumn.set(null);
         this.badMoves.set(new Set());
+        this.cpuController.clear();
 
         const isFinal = this.finalWinner !== null;
 
@@ -103,6 +136,16 @@ export default class PlayersVsCpu {
             this.gameState.setWinner(player);
             this.gameState.incrementScore(player);
 
+            const p1 = this.player1Score;
+            const p2 = this.player2Score;
+            if (this.difficulty() === 'medium') {
+                if (p1 === 2 && p2 === 0) {
+                    this.isBoostedMedium.set(true);
+                } else if (p1 === 2 && p2 === 2) {
+                    this.isBoostedMedium.set(false);
+                }
+            }
+
             if (
                 (player === 1 && this.player1Score === 3) ||
                 (player === 2 && this.player2Score === 3)
@@ -112,6 +155,10 @@ export default class PlayersVsCpu {
 
             if (player === 2 && this.difficulty() === 'medium') {
                 this.rememberBadMoveIfNeeded(player, col);
+            }
+
+            if (player === 2) {
+                this.isCpuScheduled.set(false);
             }
 
             return true;
@@ -139,16 +186,34 @@ export default class PlayersVsCpu {
     }
 
     cpuMove() {
-        if (this.difficulty() === null || this.winner !== null) return;
+        if (
+            this.difficulty() === null ||
+            this.winner !== null ||
+            this.pauseService.isPaused() ||
+            this.cpuTimeoutId !== null ||
+            this.isCpuScheduled()
+        ) {
+            return;
+        }
 
         const level = this.difficulty();
         let col = 0;
 
         if (level === 'easy') col = this.getRandomMove();
-        else if (level === 'medium') col = this.getMediumMove();
-        else col = this.getBestMinimaxMove(this.getAdaptiveDepth());
+        else if (level === 'medium') {
+            col = this.isBoostedMedium()
+                ? this.getBestMinimaxMove(3)
+                : this.getMediumMove();
+        } else col = this.getBestMinimaxMove(this.getAdaptiveDepth());
 
-        setTimeout(() => this.placeToken(col, 2), 2000);
+        this.cpuTimeoutId = setTimeout(() => {
+            if (this.pauseService.isPaused()) return;
+
+            this.cpuTimeoutId = null;
+            this.isCpuScheduled.set(false);
+            this.cpuController.clear();
+            this.placeToken(col, 2);
+        }, 2000);
     }
 
     getRandomMove(): number {

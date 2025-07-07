@@ -29,8 +29,12 @@
 
 .current-player-icon {
     display: none;
-    position: absolute;
-    top: -34px;
-    z-index: 4;
-    transition: left 350ms ease-in-out;
+
+    @media (min-width: 75em) {
+        display: block;
+        position: absolute;
+        top: -34px;
+        z-index: 4;
+        transition: left 350ms ease-in-out;
+    }
 }

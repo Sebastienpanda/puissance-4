@@ -1,0 +1,7 @@
+<div class="backdrop" (click)="close.emit()"></div>
+<div class="modal">
+    <h2>Pause</h2>
+    <button (click)="close.emit()">Continue Game</button>
+    <button (click)="restart.emit()" class="restart">Restart</button>
+    <button class="danger" (click)="quit.emit()">Quit Game</button>
+</div>

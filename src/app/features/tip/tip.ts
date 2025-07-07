@@ -10,8 +10,7 @@ import {
     signal,
     SimpleChanges
 } from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {interval, Subject, takeUntil} from 'rxjs';
+import {GameTimerService} from '@core/gameTimer/game-timer-service';
 
 @Component({
     selector: 'app-player-turn',
@@ -24,14 +23,13 @@ export class Tip implements OnChanges {
     readonly currentPlayer = input.required<number>()
     readonly winner = input.required<number>();
     readonly timeout = output<void>();
-
-    readonly secondsLeft = signal(30);
+    private readonly timer = inject(GameTimerService);
     private readonly destroyRef = inject(DestroyRef);
-    private readonly timer$ = new Subject<void>();
+    readonly secondsLeft = signal(30);
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['winner'] && this.winner() !== null) {
-            this.timer$.next();
+            this.timer.clear();
             return;
         }
 
@@ -41,23 +39,17 @@ export class Tip implements OnChanges {
     }
 
     private restartTimer() {
-        this.timer$.next();
         this.secondsLeft.set(30);
 
-        interval(1000)
-            .pipe(
-                takeUntilDestroyed(this.destroyRef),
-                takeUntil(this.timer$),
-                takeUntil(interval(31000))
-            )
-            .subscribe(() => {
-                const next = this.secondsLeft() - 1;
-                this.secondsLeft.set(next);
-
-                if (next === 0) {
-                    this.timeout.emit();
-                }
-            });
+        this.timer.start(
+            30,
+            (remaining) => {
+                this.secondsLeft.set(remaining);
+            },
+            () => {
+                this.timeout.emit();
+            }
+        );
     }
 
     readonly fillColor = computed(() =>

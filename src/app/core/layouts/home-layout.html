@@ -1,4 +1,4 @@
-@if (!isHome()) {
+@if (shouldShowHeader()) {
     <header class="header">
         <button class="btn" (click)="openMenu()">Menu</button>
         <a routerLink="/">

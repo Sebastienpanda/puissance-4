@@ -13,7 +13,11 @@ const routes: Routes = [
             {
                 path: 'play-vs-cpu',
                 loadComponent: () => import('@features/players-vs-cpu/players-vs-cpu'),
-            }
+            },
+            {
+                path: 'rules',
+                loadComponent: () => import('@features/rules/rules'),
+            },
         ],
     },
 ];

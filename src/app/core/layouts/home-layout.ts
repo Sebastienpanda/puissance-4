@@ -19,8 +19,8 @@ export class HomeLayout {
     private readonly pauseService = inject(GamePauseService);
     private readonly cpuController = inject(CpuControllerService);
 
-    isHome(): boolean {
-        return this.router.url === '/';
+    shouldShowHeader(): boolean {
+        return !['/rules', '/'].includes(this.router.url);
     }
 
     openMenu() {

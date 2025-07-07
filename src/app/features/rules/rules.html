@@ -1,0 +1,41 @@
+<div class="rules-container">
+    <div class="rules-card">
+        <h1 class="title">RULES</h1>
+
+        <h2 class="section-title">OBJECTIVE</h2>
+        <p class="text">
+            Be the first player to connect 4 of the same colored discs in a row (either vertically, horizontally, or
+            diagonally).
+        </p>
+
+        <h2 class="section-title">HOW TO PLAY</h2>
+        <ol class="rules-list">
+            <li><strong>1</strong> Red goes first in the first game.</li>
+            <li><strong>2</strong> Players must alternate turns, and only one disc can be dropped in each turn.</li>
+            <li><strong>3</strong> The game ends when there is a 4-in-a-row or a stalemate.</li>
+            <li><strong>4</strong> The starter of the previous game goes second on the next game.</li>
+        </ol>
+    </div>
+
+    <button class="home-button" (click)="goHome()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="75" viewBox="0 0 70 75" fill="none">
+            <g filter="url(#filter0_d_5_4896)">
+                <circle cx="35" cy="35" r="32" fill="#FD6687"/>
+                <circle cx="35" cy="35" r="33.5" stroke="black" stroke-width="3"/>
+            </g>
+            <path d="M20 34.5819L30.264 44.846L50.11 25" stroke="white" stroke-width="3"/>
+            <defs>
+                <filter id="filter0_d_5_4896" x="0" y="0" width="70" height="75" filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                   result="hardAlpha"/>
+                    <feOffset dy="5"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_5_4896"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_5_4896" result="shape"/>
+                </filter>
+            </defs>
+        </svg>
+    </button>
+</div>

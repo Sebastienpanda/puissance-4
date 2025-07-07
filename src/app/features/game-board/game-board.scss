@@ -1,7 +1,12 @@
 .grid {
     position: relative;
-    width: 632px;
-    height: 584px;
+    width: 300px;
+    height: 278px;
+
+    @media (min-width: 48em) {
+        width: 632px;
+        height: 584px;
+    }
 
     &__back,
     &__front {
@@ -13,7 +18,7 @@
     }
 
     &__back {
-        z-index: 0;
+        z-index: 1;
     }
 
     &__front {
@@ -23,6 +28,7 @@
 }
 
 .current-player-icon {
+    display: none;
     position: absolute;
     top: -34px;
     z-index: 4;

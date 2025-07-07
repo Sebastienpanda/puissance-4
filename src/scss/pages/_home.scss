@@ -4,17 +4,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     position: relative;
 }
 
 .bottom {
     border-radius: 3.75rem 3.75rem 0 0;
     background: var(--color-purple-900);
-    height: 200px;
+    height: 246px;
     width: 100%;
     position: absolute;
     bottom: 0;
     transition: background-color 300ms ease-in-out;
+
+    @media (min-width: 48em) {
+        height: 184px;
+    }
+
+    @media (min-width: 75em) {
+        height: 246px;
+    }
 
     &--red {
         background-color: var(--color-red-900);

@@ -1,9 +1,15 @@
 .turn-indicator {
     position: absolute;
-    bottom: -120px;
+    bottom: -134px;
     z-index: 4;
     left: 50%;
     transform: translateX(-50%);
+    width: 191px;
+    height: 150px;
+
+    @media (min-width: 48em) {
+        bottom: -108px;
+    }
 
     &__content {
         position: absolute;

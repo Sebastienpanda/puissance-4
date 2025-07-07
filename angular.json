@@ -63,10 +63,10 @@
                     "builder": "@angular/build:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "angular-template:build:production"
+                            "buildTarget": "puissance-4:build:production"
                         },
                         "development": {
-                            "buildTarget": "angular-template:build:development"
+                            "buildTarget": "puissance-4:build:development"
                         }
                     },
                     "defaultConfiguration": "development"

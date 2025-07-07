@@ -1,5 +1,5 @@
-<div class="player-info" [class]="color()">
-    <div class="player-info__icon">
+<div class="player-info" [class]="color() + '-player'">
+    <div class="player-info__icon" [class]="color()">
         <img [src]="color() === 'red' ? '/player-one.png' : '/player-two.png'" alt="Player icon"/>
     </div>
     <div class="player-info__name">{{ name() }}</div>

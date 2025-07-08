@@ -13,9 +13,10 @@
     transform: translateX(-50%);
     z-index: 4;
     width: 285px;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
 
     @media (min-width: 48em) {
+        padding: 1rem 0;
         bottom: -143px;
     }
 
